@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 行銷長模擬器：戶外用品品牌的數位轉型</title>
     
-    <!-- React & ReactDOM (Production Version for better performance) -->
+    <!-- React & ReactDOM (使用 Production 穩定版本) -->
     <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     
@@ -15,7 +15,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons (Fixed Version for stability) -->
+    <!-- Lucide Icons (使用固定穩定版本) -->
     <script src="https://unpkg.com/lucide@0.292.0/dist/umd/lucide.min.js"></script>
     
     <style>
@@ -45,7 +45,7 @@
         const { useState, useEffect } = React;
         
         // --- Icons components from Lucide ---
-        // 使用 UMD 版本的 window.lucide.icons
+        // FIX: 強化 Lucide Icon 的渲染邏輯，避免因資料格式錯誤導致應用程式停止
         const Icon = ({ name, size = 24, className }) => {
             const [iconData, setIconData] = useState(null);
 
@@ -72,7 +72,7 @@
                     className={className}
                 >
                     {iconData.map((element, index) => {
-                        // FIX: 增加檢查以確保 element 是有效的陣列，防止 TypeError: Invalid attempt to destructure non-iterable instance
+                        // 增加檢查以確保 element 是有效的陣列，防止 TypeError 錯誤
                         if (!Array.isArray(element) || element.length < 2) return null;
                         
                         const [tag, attrs] = element;
