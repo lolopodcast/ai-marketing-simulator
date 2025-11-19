@@ -45,16 +45,10 @@
         const { useState, useEffect } = React;
         
         // --- Icons components from Lucide ---
-        // FIX: 強化 Lucide Icon 的渲染邏輯，避免因資料格式錯誤導致應用程式停止
+        // FIX: 簡化 Lucide Icon 的渲染邏輯，移除不必要的 useEffect/useState，直接從 window.lucide 獲取資料，以避免在 setState 導致重新渲染時出現資料存取錯誤。
         const Icon = ({ name, size = 24, className }) => {
-            const [iconData, setIconData] = useState(null);
-
-            useEffect(() => {
-                // 確保 lucide 已載入
-                if (window.lucide && window.lucide.icons && window.lucide.icons[name]) {
-                    setIconData(window.lucide.icons[name]);
-                }
-            }, [name]);
+            // 直接從全域物件獲取 icon 資料
+            const iconData = window.lucide && window.lucide.icons ? window.lucide.icons[name] : null;
 
             if (!iconData) return null;
 
@@ -72,7 +66,7 @@
                     className={className}
                 >
                     {iconData.map((element, index) => {
-                        // 增加檢查以確保 element 是有效的陣列，防止 TypeError 錯誤
+                        // 保持對資料結構的嚴格檢查，防止 TypeError 錯誤
                         if (!Array.isArray(element) || element.length < 2) return null;
                         
                         const [tag, attrs] = element;
